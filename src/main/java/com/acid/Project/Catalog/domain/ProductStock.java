@@ -11,8 +11,6 @@ public class ProductStock {
         this.items = new EnumMap<>(items);
     }
 
-    public static ProductStock empty(){ return new ProductStock(new EnumMap<>(Size.class)); }
-
     public static ProductStock from(Map<Size, Quantity> source){
         EnumMap<Size, Quantity> map = new EnumMap<>(Size.class);
         if (source != null) source.forEach((k,v) -> map.put(k, v == null ? Quantity.from(0) : v));

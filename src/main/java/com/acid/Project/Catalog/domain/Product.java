@@ -1,12 +1,11 @@
 package com.acid.Project.Catalog.domain;
 
 
-import com.acid.Project.Catalog.infraestructure.documents.ProductDocument;
+import com.acid.Project.Catalog.domain.records.ProductRecord;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
-// TODO: CAMBIAR SHIRT POR PRODUCTO EN TODOS SITIOS
+
 public class Product {
     private ProductId id;
     private ProductName name;
@@ -22,7 +21,7 @@ public class Product {
 
     public static Product create(Long id, String name, int sales, Map<String,Integer> stock) {
         // Pasar el stock a Map<Size, Integer> y ahorrarme el switch case y el rellenado de 0
-        ProductId productId = ProductId.fromId(id);
+        ProductId productId = ProductId.from(id);
         ProductName productName = ProductName.from(name);
         ProductSales productSales = ProductSales.from(sales);
         Map<Size,Quantity> stockAux = new EnumMap<>(Size.class);
@@ -44,22 +43,17 @@ public class Product {
         return new Product(productId, productName, productSales, newStock);
     }
 
-    public static Product fromDocument(ProductDocument doc){
+    public static Product fromRecord(ProductRecord productRecord){
         return Product.create(
-                doc.getId(),
-                doc.getName(),
-                doc.getSales() == null ? 0 : doc.getSales(),
-                doc.getStock()
+                productRecord.id(),
+                productRecord.name(),
+                productRecord.sales() == null ? 0 : productRecord.sales(),
+                productRecord.stock()
         );
     }
 
-    public ProductDocument toDocument(){
-        ProductDocument doc = new ProductDocument();
-        doc.setId(id.value());
-        doc.setName(name.value());
-        doc.setSales(sales.value());
-        doc.setStock(stock.toRecord());
-        return doc;
+    public ProductRecord toRecord(){
+        return new ProductRecord(id.value(), name.value(), sales.value(), stock.toRecord());
     }
 
     public int totalStock(){

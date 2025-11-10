@@ -1,13 +1,12 @@
 package com.acid.Project.Catalog.domain;
 
-import com.acid.Project.Catalog.infraestructure.documents.ProductDocument;
+import com.acid.Project.Catalog.domain.records.ProductRecord;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductRepository {
-    public List<Product> findAll();
+    List<Product> findAll();
     void deleteAll();
     void save(Product product);
-    Optional<ProductDocument> findById(Long id);
+    ProductRecord findById(Long id);
 }

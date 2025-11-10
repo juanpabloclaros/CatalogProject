@@ -1,7 +1,7 @@
 package com.acid.Project.Catalog.infraestructure.controller;
 
+import com.acid.Project.Catalog.domain.records.ProductRecord;
 import com.acid.Project.Catalog.infraestructure.dto.ProductResponse;
-import com.acid.Project.Catalog.infraestructure.documents.ProductDocument;
 import com.acid.Project.Catalog.domain.Product;
 import com.acid.Project.Catalog.application.useCases.GetSortedListByStockAndSales;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +28,8 @@ public class GetSortedListByStockAndSalesEndpoint {
     }
 
     private ProductResponse toResponse(Product product){
-        // aplicar el toRecord en lugar de toDocument
-        ProductDocument productDocument = product.toDocument();
+        ProductRecord productRecord = product.toRecord();
 
-        return new ProductResponse(productDocument.getId(), product.getName(), productDocument.getSales(),  productDocument.getStock());
+        return new ProductResponse(productRecord.id(), productRecord.name(), productRecord.sales(),  productRecord.stock());
     }
 }

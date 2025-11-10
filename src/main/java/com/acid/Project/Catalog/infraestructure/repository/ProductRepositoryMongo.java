@@ -1,11 +1,13 @@
 package com.acid.Project.Catalog.infraestructure.repository;
 
+import com.acid.Project.Catalog.domain.records.ProductRecord;
 import com.acid.Project.Catalog.infraestructure.documents.ProductDocument;
 import com.acid.Project.Catalog.domain.Product;
 import com.acid.Project.Catalog.domain.ProductRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +22,7 @@ public class ProductRepositoryMongo implements ProductRepository {
 
     @Override
     public void save(Product product) {
-        // hacer clase intermedia record y en el shirtdocument devolver un shirtdocument a partir del record. Shirt ahora tendrá metodo toRecord y no to document
-        productRepositoryMongoSpring.save(product.toDocument());
+        productRepositoryMongoSpring.save(ProductDocument.fromRecord(product.toRecord()));
     }
 
     @Override
@@ -30,7 +31,7 @@ public class ProductRepositoryMongo implements ProductRepository {
         List<Product> products = new ArrayList<>();
 
         for (ProductDocument productDocument : list) {
-            products.add(Product.fromDocument(productDocument));
+            products.add(Product.fromRecord(productDocument.toRecord()));
         }
 
         return products;
@@ -42,7 +43,12 @@ public class ProductRepositoryMongo implements ProductRepository {
     }
 
     @Override
-    public Optional<ProductDocument> findById(Long id){
-        return productRepositoryMongoSpring.findById(id);
+    public ProductRecord findById(Long id){
+        ProductRecord productRecord = new ProductRecord(-1L, "default", 0, new HashMap<>());
+        Optional<ProductDocument> productDocument = productRepositoryMongoSpring.findById(id);
+
+        return productDocument
+                .map(document -> new ProductRecord(document.getId(), document.getName(), document.getSales(), document.getStock()))
+                .orElse(productRecord);
     }
 }

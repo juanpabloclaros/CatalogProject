@@ -1,5 +1,6 @@
 package com.acid.Project.Catalog.infraestructure.repository;
 
+import com.acid.Project.Catalog.domain.records.ProductRecord;
 import com.acid.Project.Catalog.infraestructure.documents.ProductDocument;
 import com.acid.Project.Catalog.domain.Product;
 import com.acid.Project.Catalog.domain.ProductRepository;
@@ -31,9 +32,9 @@ public class ProductRepositoryTestIntegration {
         ProductRepository productRepository = new ProductRepositoryMongo(productRepositoryMongoSpring);
 
         productRepository.save(Product.create(1L,"V-NECH BASIC SHIRT",100, Map.of("S",4,"M",9,"L",0)));
-        Optional<ProductDocument> productDocumentFound = productRepository.findById(1L);
+        ProductRecord productRecordFound = productRepository.findById(1L);
 
-        assertThat(productDocumentFound.isPresent()).isTrue();
+        assertThat(productRecordFound.id()).isEqualTo(1L);
     }
 
     @Test
