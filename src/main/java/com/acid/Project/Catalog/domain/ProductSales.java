@@ -1,10 +1,12 @@
 package com.acid.Project.Catalog.domain;
 
+import com.acid.Project.Catalog.domain.errors.NegativeSalesException;
+
 public class ProductSales {
     private final int amount;
 
     private ProductSales(int amount) {
-        if (amount < 0) throw new IllegalArgumentException("Sales cannot be negative");
+        if (amount < 0) throw new NegativeSalesException();
         this.amount = amount;
     }
 

@@ -20,7 +20,6 @@ public class Product {
     }
 
     public static Product create(Long id, String name, int sales, Map<String,Integer> stock) {
-        // Pasar el stock a Map<Size, Integer> y ahorrarme el switch case y el rellenado de 0
         ProductId productId = ProductId.from(id);
         ProductName productName = ProductName.from(name);
         ProductSales productSales = ProductSales.from(sales);

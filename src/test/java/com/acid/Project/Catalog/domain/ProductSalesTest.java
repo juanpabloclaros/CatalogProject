@@ -1,5 +1,6 @@
 package com.acid.Project.Catalog.domain;
 
+import com.acid.Project.Catalog.domain.errors.NegativeSalesException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +16,6 @@ public class ProductSalesTest {
     @Test
     void throw_with_message_when_sales_is_negative() {
         assertThatThrownBy(() -> ProductSales.from(-100))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Sales cannot be negative");
+                .isInstanceOf(NegativeSalesException.class);
     }
 }

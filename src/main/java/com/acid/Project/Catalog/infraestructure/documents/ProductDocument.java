@@ -14,7 +14,6 @@ public class ProductDocument {
     private Long id;
     private String name;
     private Integer sales;
-    // poner el enum y me ahorro los parseos entre string
     private Map<String, Integer> stock;
 
     public static ProductDocument fromRecord(ProductRecord record) {

@@ -7,7 +7,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-// TODO: QUITAR BUCLES Y GUARDAR 1 POR 1 CADA ELEMENTO
+
 @Component
 public class DataSeeder implements ApplicationRunner {
 

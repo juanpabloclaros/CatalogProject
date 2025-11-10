@@ -1,5 +1,7 @@
 package com.acid.Project.Catalog.domain;
 
+import com.acid.Project.Catalog.domain.errors.EmptyNameException;
+import com.acid.Project.Catalog.domain.errors.NameTooLongException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,15 +18,13 @@ class ProductNameTest {
     @Test
     void throw_with_message_when_name_is_empty() {
         assertThatThrownBy(() -> ProductName.from(" "))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Name cannot be empty");
+                .isInstanceOf(EmptyNameException.class);
     }
 
     @Test
     void throw_with_message_when_name_is_too_long() {
         String nameTooLong = "RAISED PRINT T-SHIRT".repeat(100);
         assertThatThrownBy(() -> ProductName.from(nameTooLong))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Name too long");
+                .isInstanceOf(NameTooLongException.class);
     }
 }

@@ -1,12 +1,15 @@
 package com.acid.Project.Catalog.domain;
 
+import com.acid.Project.Catalog.domain.errors.EmptyNameException;
+import com.acid.Project.Catalog.domain.errors.NameTooLongException;
+
 public class ProductName {
     private final String name;
-// Crear carpeta de error de dominio y hacer throw, extiende de runtime exception
+
     private ProductName(String name) {
         String v = name == null ? "" : name.trim();
-        if (v.isEmpty()) throw new IllegalArgumentException("Name cannot be empty");
-        if (v.length() > 200) throw new IllegalArgumentException("Name too long");
+        if (v.isEmpty()) throw new EmptyNameException();
+        if (v.length() > 200) throw new NameTooLongException();
         this.name = v;
     }
 

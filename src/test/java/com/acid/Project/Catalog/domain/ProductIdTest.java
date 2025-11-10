@@ -1,5 +1,6 @@
 package com.acid.Project.Catalog.domain;
 
+import com.acid.Project.Catalog.domain.errors.NegativeIdException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +16,6 @@ public class ProductIdTest {
     @Test
     void throw_with_message_when_quantity_is_negative(){
         assertThatThrownBy(() -> ProductId.from((long) -5))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("id cannot be negative");
+                .isInstanceOf(NegativeIdException.class);
     }
 }

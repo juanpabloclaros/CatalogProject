@@ -1,5 +1,6 @@
 package com.acid.Project.Catalog.domain;
 
+import com.acid.Project.Catalog.domain.errors.NegativeQuantityException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +16,6 @@ public class QuantityTest {
     @Test
     void throw_with_message_when_quantity_is_negative(){
         assertThatThrownBy(() -> Quantity.from(-5))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Quantity cannot be negative");
+                .isInstanceOf(NegativeQuantityException.class);
     }
 }
