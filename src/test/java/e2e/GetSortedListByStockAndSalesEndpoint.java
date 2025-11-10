@@ -39,9 +39,8 @@ public class GetSortedListByStockAndSalesEndpoint {
         productRepository.save(Product.create(3L,"RAISED PRINT T-SHIRT",80, Map.of("S",20,"M",2,"L",20)));
     }
 
-    // añadir los mismos casos que el caso de uso
     @Test
-    void order_by_weight(){
+    void order_by_sales_when_wSales_is_greater_than_wStock(){
         given()
                 .queryParam("wStock",0.2)
                 .queryParam("wSales",1.0)
@@ -53,5 +52,35 @@ public class GetSortedListByStockAndSalesEndpoint {
                 .body("[0].id",equalTo(1))
                 .body("[1].id",equalTo(3))
                 .body("[2].id",equalTo(2));
+    }
+
+    @Test
+    void order_by_stock_when_wStock_is_greater_than_wSales(){
+        given()
+                .queryParam("wStock",1.0)
+                .queryParam("wSales",0.2)
+                .when()
+                .get("/api/products/weighted")
+                .then()
+                .statusCode(200)
+                .body("$", hasSize(3))
+                .body("[0].id",equalTo(2))
+                .body("[1].id",equalTo(3))
+                .body("[2].id",equalTo(1));
+    }
+
+    @Test
+    void order_by_name_when_wStock_and_wSales_are_zero(){
+        given()
+                .queryParam("wStock",0.0)
+                .queryParam("wSales",0.0)
+                .when()
+                .get("/api/products/weighted")
+                .then()
+                .statusCode(200)
+                .body("$", hasSize(3))
+                .body("[0].id",equalTo(2))
+                .body("[1].id",equalTo(3))
+                .body("[2].id",equalTo(1));
     }
 }
