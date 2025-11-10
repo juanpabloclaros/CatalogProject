@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: Project
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/catalog_db}
+app:
+  seed:
+    enabled: true
