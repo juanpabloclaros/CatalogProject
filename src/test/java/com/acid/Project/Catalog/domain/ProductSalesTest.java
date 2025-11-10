@@ -14,7 +14,7 @@ public class ProductSalesTest {
     }
 
     @Test
-    void throw_with_message_when_sales_is_negative() {
+    void throw_when_sales_is_negative() {
         assertThatThrownBy(() -> ProductSales.from(-100))
                 .isInstanceOf(NegativeSalesException.class);
     }

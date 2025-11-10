@@ -14,7 +14,7 @@ public class QuantityTest {
     }
 
     @Test
-    void throw_with_message_when_quantity_is_negative(){
+    void throw_when_quantity_is_negative(){
         assertThatThrownBy(() -> Quantity.from(-5))
                 .isInstanceOf(NegativeQuantityException.class);
     }
