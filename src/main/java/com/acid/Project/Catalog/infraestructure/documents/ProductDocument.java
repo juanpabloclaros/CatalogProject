@@ -6,10 +6,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 
-@Document("shirts")
+@Document("products")
 @Getter
 @Setter
-public class ShirtDocument {
+public class ProductDocument {
     private Long id;
     private String name;
     private Integer sales;

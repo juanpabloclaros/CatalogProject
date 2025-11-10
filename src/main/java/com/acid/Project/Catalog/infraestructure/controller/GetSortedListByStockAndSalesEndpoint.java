@@ -1,8 +1,8 @@
 package com.acid.Project.Catalog.infraestructure.controller;
 
-import com.acid.Project.Catalog.infraestructure.dto.ShirtResponse;
-import com.acid.Project.Catalog.infraestructure.documents.ShirtDocument;
-import com.acid.Project.Catalog.domain.Shirt;
+import com.acid.Project.Catalog.infraestructure.dto.ProductResponse;
+import com.acid.Project.Catalog.infraestructure.documents.ProductDocument;
+import com.acid.Project.Catalog.domain.Product;
 import com.acid.Project.Catalog.application.useCases.GetSortedListByStockAndSales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,17 +20,17 @@ public class GetSortedListByStockAndSalesEndpoint {
     private GetSortedListByStockAndSales getSortedListByStockAndSales;
 
     @GetMapping()
-    public List<ShirtResponse> execute(
+    public List<ProductResponse> execute(
             @RequestParam(name = "wStock") double wStock,
             @RequestParam(name = "wSales") double wSales
     ) {
         return getSortedListByStockAndSales.execute(wStock, wSales).stream().map(this::toResponse).toList();
     }
 
-    private ShirtResponse toResponse(Shirt shirt){
+    private ProductResponse toResponse(Product product){
         // aplicar el toRecord en lugar de toDocument
-        ShirtDocument  shirtDocument = shirt.toDocument();
+        ProductDocument productDocument = product.toDocument();
 
-        return new ShirtResponse(shirtDocument.getId(), shirt.getName(), shirtDocument.getSales(),  shirtDocument.getStock());
+        return new ProductResponse(productDocument.getId(), product.getName(), productDocument.getSales(),  productDocument.getStock());
     }
 }

@@ -6,16 +6,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
-class ShirtNameTest {
+class ProductNameTest {
 
     @Test
-    void create_shirt_name_when_is_valid() {
-        assertThat(ShirtName.from("RAISED PRINT T-SHIRT").value()).isEqualTo("RAISED PRINT T-SHIRT");
+    void create_product_name_when_is_valid() {
+        assertThat(ProductName.from("RAISED PRINT T-SHIRT").value()).isEqualTo("RAISED PRINT T-SHIRT");
     }
 
     @Test
     void throw_with_message_when_name_is_empty() {
-        assertThatThrownBy(() -> ShirtName.from(" "))
+        assertThatThrownBy(() -> ProductName.from(" "))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Name cannot be empty");
     }
@@ -23,7 +23,7 @@ class ShirtNameTest {
     @Test
     void throw_with_message_when_name_is_too_long() {
         String nameTooLong = "RAISED PRINT T-SHIRT".repeat(100);
-        assertThatThrownBy(() -> ShirtName.from(nameTooLong))
+        assertThatThrownBy(() -> ProductName.from(nameTooLong))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Name too long");
     }

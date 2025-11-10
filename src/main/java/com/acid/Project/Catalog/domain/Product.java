@@ -1,29 +1,29 @@
 package com.acid.Project.Catalog.domain;
 
 
-import com.acid.Project.Catalog.infraestructure.documents.ShirtDocument;
+import com.acid.Project.Catalog.infraestructure.documents.ProductDocument;
 
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 // TODO: CAMBIAR SHIRT POR PRODUCTO EN TODOS SITIOS
-public class Shirt {
+public class Product {
     private Long id; // ProductId y verificar que no es negativo
-    private ShirtName name;
-    private ShirtSales sales;
-    private ShirtStock stock;
+    private ProductName name;
+    private ProductSales sales;
+    private ProductStock stock;
 
-    private Shirt(Long id, ShirtName name, ShirtSales sales, ShirtStock stock) {
+    private Product(Long id, ProductName name, ProductSales sales, ProductStock stock) {
         this.id = id;
         this.name = name;
         this.sales = sales;
         this.stock = stock;
     }
 
-    public static Shirt create(Long id, String name, int sales, Map<String,Integer> stock) {
+    public static Product create(Long id, String name, int sales, Map<String,Integer> stock) {
         // Pasar el stock a Map<Size, Integer> y ahorrarme el switch case y el rellenado de 0
-        ShirtName sName = ShirtName.from(name);
-        ShirtSales sSales = ShirtSales.from(sales);
+        ProductName sName = ProductName.from(name);
+        ProductSales sSales = ProductSales.from(sales);
         Map<Size,Quantity> stockAux = new EnumMap<>(Size.class);
 
         stock.forEach((s,qty) ->{
@@ -38,13 +38,13 @@ public class Shirt {
             stockAux.putIfAbsent(sz, Quantity.from(0));
         }
 
-        ShirtStock newStock = ShirtStock.from(stockAux);
+        ProductStock newStock = ProductStock.from(stockAux);
 
-        return new Shirt(id, sName, sSales, newStock);
+        return new Product(id, sName, sSales, newStock);
     }
 
-    public static Shirt fromDocument(ShirtDocument doc){
-        return Shirt.create(
+    public static Product fromDocument(ProductDocument doc){
+        return Product.create(
                 doc.getId(),
                 doc.getName(),
                 doc.getSales() == null ? 0 : doc.getSales(),
@@ -52,8 +52,8 @@ public class Shirt {
         );
     }
 // hacer lo que hace el asMap pero en el stock, que quede encapsulado
-    public ShirtDocument toDocument(){
-        ShirtDocument doc = new ShirtDocument();
+    public ProductDocument toDocument(){
+        ProductDocument doc = new ProductDocument();
         doc.setId(id);
         doc.setName(name.value());
         doc.setSales(sales.value());
