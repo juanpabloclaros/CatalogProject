@@ -66,4 +66,8 @@ public class Product {
     public int getSales(){
         return sales.value();
     }
+
+    public Long getProductId(){
+        return id.value();
+    }
 }

@@ -13,8 +13,11 @@ import java.util.List;
 
 @Service
 public class GetSortedListByStockAndSales {
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public GetSortedListByStockAndSales(ProductRepository productRepository){
+        this.productRepository = productRepository;
+    }
 
     public List<Product> execute(double wStock, double wSales) {
         WeightStock weightStock = WeightStock.from(wStock);

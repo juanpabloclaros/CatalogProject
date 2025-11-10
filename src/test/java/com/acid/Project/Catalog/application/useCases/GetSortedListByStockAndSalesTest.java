@@ -2,6 +2,7 @@ package com.acid.Project.Catalog.application.useCases;
 
 import com.acid.Project.Catalog.domain.Product;
 import com.acid.Project.Catalog.domain.ProductRepository;
+import com.acid.Project.Catalog.infraestructure.repository.ProductRepositoryMemory;
 import com.acid.Project.Catalog.infraestructure.repository.ProductRepositoryMongo;
 import com.acid.Project.Catalog.infraestructure.repository.ProductRepositoryMongoSpring;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,23 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
 @ActiveProfiles("Test")
-public class GetSortedListByStockAndSalesTestIntegration {
+public class GetSortedListByStockAndSalesTest {
 
-    @Autowired
-    private ProductRepositoryMongoSpring productRepositoryMongoSpring;
-    @Autowired
     private GetSortedListByStockAndSales getSortedListByStockAndSales;
 
     @BeforeEach
     void clean(){
-        ProductRepository productRepository = new ProductRepositoryMongo(productRepositoryMongoSpring);
+        ProductRepository productRepository = new ProductRepositoryMemory(new ArrayList<>());
+        this.getSortedListByStockAndSales = new GetSortedListByStockAndSales(productRepository);
 
         productRepository.deleteAll();
 
